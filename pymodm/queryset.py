@@ -107,7 +107,7 @@ class QuerySet(object):
         try:
             first = next(results)
         except StopIteration:
-            raise self._model.DoesNotExist()
+            return None
         try:
             next(results)
         except StopIteration:
@@ -127,7 +127,7 @@ class QuerySet(object):
         try:
             return next(iter(self.limit(-1)))
         except StopIteration:
-            raise self._model.DoesNotExist()
+            return None
 
     def aggregate(self, *pipeline, **kwargs):
         """Perform a MongoDB aggregation.
