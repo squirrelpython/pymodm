@@ -41,7 +41,7 @@ DEFAULT_CONNECTION_ALIAS = 'default'
 _CONNECTIONS = dict()
 
 
-def connect(mongodb_uri, alias=DEFAULT_CONNECTION_ALIAS, **kwargs):
+def connect(mongodb_uri, databse_name, alias=DEFAULT_CONNECTION_ALIAS, **kwargs):
     """Register a connection to MongoDB, optionally providing a name for it.
 
     Note: :func:`connect` must be called with before any
@@ -66,8 +66,6 @@ def connect(mongodb_uri, alias=DEFAULT_CONNECTION_ALIAS, **kwargs):
     """
     # Make sure the database is provided.
     parsed_uri = uri_parser.parse_uri(mongodb_uri)
-    if not parsed_uri.get('database'):
-        raise ValueError('Connection must specify a database.')
 
     # Include client metadata if available.
     if DriverInfo is not None:
@@ -78,7 +76,7 @@ def connect(mongodb_uri, alias=DEFAULT_CONNECTION_ALIAS, **kwargs):
     _CONNECTIONS[alias] = ConnectionInfo(
         parsed_uri=parsed_uri,
         conn_string=mongodb_uri,
-        database=MongoClient(mongodb_uri, **kwargs)[parsed_uri['database']])
+        database=MongoClient(mongodb_uri, **kwargs)[databse_name])
 
 
 def _get_connection(alias=DEFAULT_CONNECTION_ALIAS):
