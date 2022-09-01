@@ -48,7 +48,7 @@ CLASSIFIERS = [
 ]
 
 
-requires = ['pymongo>=3.4,<4.0']
+requires = ['pymongo[srv]']
 if sys.version_info[:2] == (2, 7):
     requires.append('ipaddress')
 
